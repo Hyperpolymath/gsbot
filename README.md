@@ -5,6 +5,8 @@ A Discord bot that promotes sustainability in the garment and fashion industry b
 [![CI/CD Pipeline](https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml/badge.svg)](https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![RSR Compliant](https://img.shields.io/badge/RSR-Bronze-cd7f32.svg)](RSR.md)
+[![TPCF Perimeter 3](https://img.shields.io/badge/TPCF-Perimeter%203-success.svg)](TPCF.md)
 
 ## ✨ Features
 
@@ -15,6 +17,26 @@ A Discord bot that promotes sustainability in the garment and fashion industry b
 - **Sustainable Alternatives**: Find eco-friendly alternatives to conventional items
 - **User Tracking**: Gamification with points, levels, and leaderboards
 - **Tips & Education**: Daily sustainability tips and best practices
+
+## 📜 Standards Compliance
+
+This project follows the **Rhodium Standard Repository (RSR)** framework:
+
+- **RSR Level**: Bronze ✅ - See [RSR.md](RSR.md) for compliance details
+- **TPCF**: Perimeter 3 (Community Sandbox) - Fully open contribution model, see [TPCF.md](TPCF.md)
+- **Security**: RFC 9116 compliant security.txt - See [SECURITY.md](SECURITY.md)
+- **Documentation**: Complete standards - README, CONTRIBUTING, CODE_OF_CONDUCT, MAINTAINERS
+- **Build System**: justfile + Makefile - Run `just --list` or `make help`
+- **CI/CD**: Automated testing across Python 3.9-3.12
+- **Code Quality**: Black, Flake8, MyPy, Pylint checks
+
+### What This Means
+
+✅ **Well-documented**: Every aspect of the project is documented
+✅ **Transparent**: Clear governance and contribution processes
+✅ **Tested**: Comprehensive test suite with CI/CD
+✅ **Secure**: Security policy and vulnerability reporting
+✅ **Welcoming**: Open to all contributors (TPCF Perimeter 3)
 
 ## 🚀 Quick Start
 
