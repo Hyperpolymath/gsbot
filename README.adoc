@@ -1,0 +1,14 @@
+= GSBot
+:toc: auto
+
+A Discord bot that promotes sustainability in the garment and fashion industry.
+
+== Features
+
+* Sustainable fashion insights
+* Tracking and analytics
+* Actionable sustainability information
+
+== License
+
+AGPL-3.0-or-later
