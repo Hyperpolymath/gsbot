@@ -1,0 +1,348 @@
+// SPDX-License-Identifier: MPL-2.0
+= GSBot Roadmap
+:toc: preamble
+:toclevels: 3
+:icons: font
+:source-highlighter: rouge
+
+Development roadmap for the Garment Sustainability Bot.
+
+== Current State (v0.1.0)
+
+=== Implemented Features
+
+[cols="2,3,1"]
+|===
+|Feature |Description |Status
+
+|*Discord Bot Core*
+|Full Discord.py integration with async command handling
+|Done
+
+|*Sustainability Cog*
+|Commands: `!sustainability`, `!alternatives`, `!care`, `!tips`, `!search`
+|Done
+
+|*Materials Cog*
+|Commands: `!impact`, `!compare` for material analysis
+|Done
+
+|*Brands Cog*
+|Commands: `!brands` with ratings, certifications, search
+|Done
+
+|*User Cog*
+|Commands: `!profile`, `!leaderboard`, `!setpreference`
+|Done
+
+|*Admin Cog*
+|Commands: `!loaddata`, `!stats`, `!announce`
+|Done
+
+|*Data Models*
+|Material, Garment, Brand, User models with SQLAlchemy ORM
+|Done
+
+|*Sustainability Analyzer*
+|Scoring algorithms, impact calculations, recommendations
+|Done
+
+|*User Gamification*
+|Points, levels, ranks, leaderboard system
+|Done
+
+|*Fixture Data*
+|10 materials, 7 garments, 6 brands (sustainable & comparison)
+|Done
+
+|*Test Suite*
+|Unit tests, integration tests, pytest fixtures
+|Done
+
+|*CI/CD Pipeline*
+|GitHub Actions, multi-version Python, quality checks
+|Done
+
+|*RSR Bronze*
+|Full Rhodium Standard Repository compliance
+|Done
+|===
+
+=== Architecture Overview
+
+[source]
+----
+Discord Platform
+       │
+       ▼
+Bot Layer (Discord.py)
+├── Sustainability Cog
+├── Materials Cog
+├── Brands Cog
+├── User Cog
+└── Admin Cog
+       │
+       ▼
+Service Layer
+├── Database Service (CRUD, queries)
+└── Sustainability Analyzer (scoring, recommendations)
+       │
+       ▼
+Data Layer (SQLAlchemy)
+├── Material Model
+├── Garment Model
+├── Brand Model
+└── User Model
+       │
+       ▼
+SQLite Database
+----
+
+== Phase 1: Foundation Hardening
+
+Target: Stabilize current implementation, improve data coverage
+
+=== Data Expansion
+
+* [ ] Expand material database (50+ materials with full metrics)
+* [ ] Add garment categories (activewear, formal, outdoor, etc.)
+* [ ] Expand brand database (30+ brands with certifications)
+* [ ] Add certification details (GOTS, OEKO-TEX, B-Corp, etc.)
+* [ ] Include care instruction templates per garment type
+
+=== Bot Improvements
+
+* [ ] Add command cooldowns and rate limiting
+* [ ] Implement embed pagination for long lists
+* [ ] Add interactive buttons/menus (Discord UI components)
+* [ ] Improve error messages and user guidance
+* [ ] Add help command with dynamic documentation
+
+=== Testing & Quality
+
+* [ ] Achieve 90%+ test coverage
+* [ ] Add end-to-end Discord bot tests
+* [ ] Implement load testing
+* [ ] Add property-based testing for algorithms
+
+== Phase 2: Enhanced Features
+
+Target: Add advanced functionality and intelligence
+
+=== Carbon Footprint Calculator
+
+* [ ] Per-garment carbon footprint estimation
+* [ ] Production + transport + care lifecycle analysis
+* [ ] User wardrobe carbon tracking
+* [ ] Comparison with industry averages
+* [ ] Reduction suggestions
+
+=== Wardrobe Tracking
+
+* [ ] Personal wardrobe database per user
+* [ ] Cost-per-wear calculations
+* [ ] Garment age and usage tracking
+* [ ] End-of-life recommendations
+* [ ] Donation/recycling suggestions
+
+=== Smart Recommendations
+
+* [ ] User preference learning
+* [ ] Personalized sustainability suggestions
+* [ ] Brand matching based on values
+* [ ] Budget-aware recommendations
+* [ ] Location-aware suggestions (local brands)
+
+=== External Integrations
+
+* [ ] Good On You API integration
+* [ ] Open Apparel Registry data
+* [ ] Fashion Revolution resources
+* [ ] Life Cycle Assessment databases
+
+== Phase 3: Platform Expansion
+
+Target: Multi-platform support, web presence
+
+=== Web Dashboard
+
+* [ ] User profile web view
+* [ ] Statistics and visualizations
+* [ ] Wardrobe management interface
+* [ ] Brand/material browser
+* [ ] REST API for frontend
+
+=== Multi-Platform Bot
+
+* [ ] Slack integration
+* [ ] Telegram integration
+* [ ] Matrix/Element integration
+* [ ] Unified command interface
+
+=== Database Migration
+
+* [ ] PostgreSQL support
+* [ ] Redis caching layer
+* [ ] Database migrations (Alembic)
+* [ ] Backup and recovery procedures
+
+== Phase 4: Intelligence Layer
+
+Target: ML-powered features
+
+=== Machine Learning
+
+* [ ] Image recognition for garment identification
+* [ ] Material detection from photos
+* [ ] Care label OCR
+* [ ] Personalized recommendation engine
+* [ ] Trend analysis and predictions
+
+=== Advanced Analytics
+
+* [ ] Community sustainability metrics
+* [ ] Server-wide impact reports
+* [ ] Seasonal trend analysis
+* [ ] Environmental impact projections
+
+== Phase 5: Language Migration
+
+Target: Migrate to Rust/ReScript per language policy
+
+=== Migration Strategy
+
+Per `.claude/CLAUDE.md` language policy:
+
+[cols="2,2,2"]
+|===
+|Component |Current |Target
+
+|Backend/Core
+|Python
+|Rust
+
+|Bot Logic
+|Python (discord.py)
+|Rust (serenity)
+
+|Web Frontend
+|N/A
+|ReScript
+
+|CLI Tools
+|Python
+|Rust
+
+|Configuration
+|TOML/ENV
+|Nickel
+
+|Runtime
+|Python
+|Deno (for JS glue)
+|===
+
+=== Migration Phases
+
+. *Phase 5a*: Rust core library
+** Data models in Rust
+** Sustainability algorithms in Rust
+** Database layer (diesel/sqlx)
+
+. *Phase 5b*: Rust Discord bot
+** Migrate to serenity crate
+** Maintain feature parity
+** Performance optimization
+
+. *Phase 5c*: ReScript web dashboard
+** Frontend in ReScript
+** Compile to JS, run on Deno
+** Type-safe UI components
+
+. *Phase 5d*: Remove Python
+** Archive Python implementation
+** Full Rust/ReScript stack
+** Update CI/CD
+
+== Long-Term Vision
+
+=== Community Features
+
+* Sustainable fashion challenges
+* Community rankings
+* Shared wardrobes (swapping)
+* Local sustainable shopping groups
+* Educational content creation
+
+=== E-Commerce Integration
+
+* Browser extension for shopping
+* Sustainability scores on product pages
+* Alternative suggestions while browsing
+* Price-sustainability comparison
+
+=== Open Data Initiative
+
+* Public sustainability database
+* API for third-party apps
+* Research data exports
+* Academic partnerships
+
+== Standards Compliance Roadmap
+
+=== Current: RSR Bronze
+
+All Bronze requirements met.
+
+=== Target: RSR Silver
+
+* [ ] Nix flake for reproducible builds
+* [ ] Security audit completion
+* [ ] Formal verification for critical paths
+* [ ] 100% type hint coverage
+
+=== Aspirational: RSR Gold
+
+* [ ] Mathematical proofs for algorithms
+* [ ] Complete formal verification
+* [ ] Academic peer review
+* [ ] Security certification
+
+== Contributing to the Roadmap
+
+See link:CONTRIBUTING.md[CONTRIBUTING.md] for how to contribute.
+
+Roadmap items are tracked as GitHub Issues with labels:
+
+* `roadmap:phase-1` through `roadmap:phase-5`
+* `priority:high`, `priority:medium`, `priority:low`
+* `type:feature`, `type:enhancement`, `type:migration`
+
+== Version History
+
+[cols="1,2,3"]
+|===
+|Version |Date |Milestone
+
+|0.1.0
+|2025-11-22
+|Initial release, core bot functionality
+
+|0.2.0
+|TBD
+|Phase 1 completion (data expansion)
+
+|0.3.0
+|TBD
+|Phase 2 completion (enhanced features)
+
+|1.0.0
+|TBD
+|Stable release, Phase 3 completion
+|===
+
+---
+
+_Last updated: 2025-12-26_
+
+_TPCF Perimeter 3 - Open for community contributions_
