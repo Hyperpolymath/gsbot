@@ -1,348 +1,328 @@
-// SPDX-License-Identifier: MPL-2.0
 = GSBot Roadmap
-:toc: preamble
+:toc: left
 :toclevels: 3
 :icons: font
 :source-highlighter: rouge
 
-Development roadmap for the Garment Sustainability Bot.
+== Project Status: Alpha
 
-== Current State (v0.1.0)
+GSBot is a feature-complete Discord bot for garment sustainability education and tracking. The core functionality is implemented and ready for community testing.
 
-=== Implemented Features
+== Completed Features
 
-[cols="2,3,1"]
+=== Core Bot Infrastructure
+
+[cols="1,3,1", options="header"]
 |===
 |Feature |Description |Status
 
-|*Discord Bot Core*
-|Full Discord.py integration with async command handling
+|Discord.py Integration
+|Full Discord bot with async command handling, cog-based architecture
 |Done
 
-|*Sustainability Cog*
-|Commands: `!sustainability`, `!alternatives`, `!care`, `!tips`, `!search`
+|SQLAlchemy ORM
+|Complete data layer with models, migrations (Alembic), session management
 |Done
 
-|*Materials Cog*
-|Commands: `!impact`, `!compare` for material analysis
+|Caching Layer
+|TTL and LRU caching for database queries and expensive operations
 |Done
 
-|*Brands Cog*
-|Commands: `!brands` with ratings, certifications, search
+|Logging System
+|Colored console output with file logging support
 |Done
 
-|*User Cog*
-|Commands: `!profile`, `!leaderboard`, `!setpreference`
-|Done
-
-|*Admin Cog*
-|Commands: `!loaddata`, `!stats`, `!announce`
-|Done
-
-|*Data Models*
-|Material, Garment, Brand, User models with SQLAlchemy ORM
-|Done
-
-|*Sustainability Analyzer*
-|Scoring algorithms, impact calculations, recommendations
-|Done
-
-|*User Gamification*
-|Points, levels, ranks, leaderboard system
-|Done
-
-|*Fixture Data*
-|10 materials, 7 garments, 6 brands (sustainable & comparison)
-|Done
-
-|*Test Suite*
-|Unit tests, integration tests, pytest fixtures
-|Done
-
-|*CI/CD Pipeline*
-|GitHub Actions, multi-version Python, quality checks
-|Done
-
-|*RSR Bronze*
-|Full Rhodium Standard Repository compliance
+|Configuration
+|Environment-based settings with validation
 |Done
 |===
 
-=== Architecture Overview
+=== Sustainability Commands
 
-[source]
-----
-Discord Platform
-       │
-       ▼
-Bot Layer (Discord.py)
-├── Sustainability Cog
-├── Materials Cog
-├── Brands Cog
-├── User Cog
-└── Admin Cog
-       │
-       ▼
-Service Layer
-├── Database Service (CRUD, queries)
-└── Sustainability Analyzer (scoring, recommendations)
-       │
-       ▼
-Data Layer (SQLAlchemy)
-├── Material Model
-├── Garment Model
-├── Brand Model
-└── User Model
-       │
-       ▼
-SQLite Database
-----
+[cols="1,3,1", options="header"]
+|===
+|Command |Functionality |Status
 
-== Phase 1: Foundation Hardening
+|`!sustainability`
+|Calculate and display sustainability score for garments with water, carbon, energy metrics
+|Done
 
-Target: Stabilize current implementation, improve data coverage
+|`!alternatives`
+|Find more sustainable alternatives in the same garment category
+|Done
 
-=== Data Expansion
+|`!care`
+|Generate material-specific care instructions to extend garment life
+|Done
 
-* [ ] Expand material database (50+ materials with full metrics)
-* [ ] Add garment categories (activewear, formal, outdoor, etc.)
-* [ ] Expand brand database (30+ brands with certifications)
-* [ ] Add certification details (GOTS, OEKO-TEX, B-Corp, etc.)
-* [ ] Include care instruction templates per garment type
+|`!tips`
+|Display random sustainability tips for conscious consumption
+|Done
+|===
 
-=== Bot Improvements
+=== Material Analysis
 
-* [ ] Add command cooldowns and rate limiting
-* [ ] Implement embed pagination for long lists
-* [ ] Add interactive buttons/menus (Discord UI components)
-* [ ] Improve error messages and user guidance
-* [ ] Add help command with dynamic documentation
+[cols="1,3,1", options="header"]
+|===
+|Command |Functionality |Status
 
-=== Testing & Quality
+|`!impact`
+|Detailed environmental impact breakdown: water usage, carbon footprint, biodegradability, chemical usage, energy consumption
+|Done
 
-* [ ] Achieve 90%+ test coverage
-* [ ] Add end-to-end Discord bot tests
-* [ ] Implement load testing
-* [ ] Add property-based testing for algorithms
+|`!compare`
+|Side-by-side comparison of two materials across all sustainability metrics
+|Done
 
-== Phase 2: Enhanced Features
+|`!search`
+|Search materials and garments by name, description, or category
+|Done
+|===
 
-Target: Add advanced functionality and intelligence
+=== Brand Intelligence
 
-=== Carbon Footprint Calculator
+[cols="1,3,1", options="header"]
+|===
+|Command |Functionality |Status
 
-* [ ] Per-garment carbon footprint estimation
-* [ ] Production + transport + care lifecycle analysis
-* [ ] User wardrobe carbon tracking
-* [ ] Comparison with industry averages
-* [ ] Reduction suggestions
+|`!brands`
+|View top-rated sustainable brands with overall ratings
+|Done
 
-=== Wardrobe Tracking
+|`!brands <name>`
+|Detailed brand profile: environmental, labor, animal welfare ratings, certifications, transparency scores
+|Done
+|===
 
-* [ ] Personal wardrobe database per user
-* [ ] Cost-per-wear calculations
-* [ ] Garment age and usage tracking
-* [ ] End-of-life recommendations
-* [ ] Donation/recycling suggestions
+=== Gamification System
 
-=== Smart Recommendations
+[cols="1,3,1", options="header"]
+|===
+|Feature |Description |Status
 
-* [ ] User preference learning
-* [ ] Personalized sustainability suggestions
-* [ ] Brand matching based on values
-* [ ] Budget-aware recommendations
-* [ ] Location-aware suggestions (local brands)
+|Points System
+|Earn points for sustainability queries (2-7 points per action)
+|Done
+
+|Leveling
+|Level progression every 100 points
+|Done
+
+|Ranks
+|5-tier rank system: Learner -> Conscious Consumer -> Enthusiast -> Eco Warrior -> Champion
+|Done
+
+|`!profile`
+|User statistics, rank, level, points, preferences
+|Done
+
+|`!leaderboard`
+|Top 10 sustainability champions
+|Done
+
+|`!setpreference`
+|Configure materials, budget, priority preferences
+|Done
+|===
+
+=== Data Models
+
+[cols="1,3,1", options="header"]
+|===
+|Model |Attributes |Status
+
+|Material
+|5 environmental scores, production metrics, biodegradability, recycling potential, care requirements
+|Done
+
+|Garment
+|Category, materials relationship, weight, lifespan, care instructions, calculated sustainability score
+|Done
+
+|Brand
+|3 rating dimensions, 5 certification flags, transparency score, Good On You rating
+|Done
+
+|User
+|Discord ID, points, level, queries count, preferences
+|Done
+|===
+
+=== Testing
+
+[cols="1,3,1", options="header"]
+|===
+|Type |Coverage |Status
+
+|Unit Tests
+|Model calculations, grade assignment, certification badges, point/leveling system
+|Done
+
+|Integration Tests
+|Bot command execution flows
+|Done
+
+|Test Infrastructure
+|pytest with in-memory SQLite fixtures
+|Done
+|===
+
+== Phase 1: Production Readiness
+
+Target: Prepare for public deployment
+
+=== Database & Data
+
+* [ ] Curate initial material dataset (20+ common materials with verified metrics)
+* [ ] Curate garment dataset (50+ common garment types)
+* [ ] Integrate Good On You API or scrape verified brand data
+* [ ] PostgreSQL production configuration
+* [ ] Database backup and recovery procedures
+
+=== Deployment
+
+* [ ] Container optimization (multi-stage build, minimal image)
+* [ ] Health check endpoints
+* [ ] Graceful shutdown handling
+* [ ] Kubernetes manifests or docker-compose production config
+* [ ] Secret management (Vault, SOPS, or sealed secrets)
+
+=== Observability
+
+* [ ] Prometheus metrics endpoint
+* [ ] Grafana dashboard templates
+* [ ] Error tracking (Sentry integration)
+* [ ] Command usage analytics
+
+=== Security
+
+* [ ] Rate limiting per user/guild
+* [ ] Input sanitization audit
+* [ ] Dependency vulnerability scanning in CI
+* [ ] Bot permission audit (minimal required permissions)
+
+== Phase 2: Data Enrichment
+
+Target: Comprehensive sustainability intelligence
 
 === External Integrations
 
-* [ ] Good On You API integration
-* [ ] Open Apparel Registry data
-* [ ] Fashion Revolution resources
-* [ ] Life Cycle Assessment databases
+* [ ] Good On You API integration for real-time brand ratings
+* [ ] Open Apparel Registry integration for supply chain transparency
+* [ ] Life Cycle Assessment (LCA) database connections
+* [ ] Fashion Revolution transparency index data
 
-== Phase 3: Platform Expansion
+=== Enhanced Scoring
 
-Target: Multi-platform support, web presence
+* [ ] Multi-factor scoring with configurable weights
+* [ ] Regional impact variations (production location matters)
+* [ ] Seasonal recommendations
+* [ ] Price-per-wear calculations
 
-=== Web Dashboard
+=== New Commands
 
-* [ ] User profile web view
-* [ ] Statistics and visualizations
-* [ ] Wardrobe management interface
-* [ ] Brand/material browser
-* [ ] REST API for frontend
+* [ ] `!lifecycle` - Full garment lifecycle analysis
+* [ ] `!certifications` - Explain certification meanings (GOTS, OEKO-TEX, etc.)
+* [ ] `!carbon` - Carbon footprint calculator for wardrobe
+* [ ] `!supply-chain` - Brand supply chain transparency
 
-=== Multi-Platform Bot
+== Phase 3: Personalization
 
-* [ ] Slack integration
-* [ ] Telegram integration
-* [ ] Matrix/Element integration
-* [ ] Unified command interface
+Target: Tailored sustainability guidance
 
-=== Database Migration
+=== User Features
 
-* [ ] PostgreSQL support
-* [ ] Redis caching layer
-* [ ] Database migrations (Alembic)
-* [ ] Backup and recovery procedures
+* [ ] Wardrobe tracking (what you own)
+* [ ] Purchase history logging
+* [ ] Personal sustainability dashboard
+* [ ] Goal setting and progress tracking
+* [ ] Achievement badges beyond ranks
 
-== Phase 4: Intelligence Layer
+=== Recommendations
 
-Target: ML-powered features
+* [ ] Personalized alternative suggestions based on preferences
+* [ ] Budget-aware recommendations
+* [ ] Style-compatible sustainable swaps
+* [ ] Seasonal wardrobe planning
 
-=== Machine Learning
+=== Notifications
+
+* [ ] Scheduled sustainability tips
+* [ ] New sustainable brand alerts
+* [ ] Certification updates for tracked brands
+
+== Phase 4: Community Features
+
+Target: Social sustainability
+
+=== Social Features
+
+* [ ] Clothing swap coordination
+* [ ] Guild leaderboards (per server)
+* [ ] Community challenges
+* [ ] Sustainability streaks
+* [ ] Share achievements
+
+=== Content
+
+* [ ] User-submitted garment care tips
+* [ ] Community brand reviews
+* [ ] Sustainable find sharing
+* [ ] Local resource discovery
+
+== Phase 5: Platform Expansion
+
+Target: Multi-platform presence
+
+=== Additional Platforms
+
+* [ ] Slack workspace bot
+* [ ] Telegram bot
+* [ ] Web dashboard (readonly initially)
+* [ ] REST API for third-party integrations
+
+=== Advanced Features
 
 * [ ] Image recognition for garment identification
-* [ ] Material detection from photos
-* [ ] Care label OCR
-* [ ] Personalized recommendation engine
-* [ ] Trend analysis and predictions
+* [ ] Receipt/tag OCR for material composition
+* [ ] ML-powered recommendations
+* [ ] Natural language queries
 
-=== Advanced Analytics
+== Architecture Migration Notes
 
-* [ ] Community sustainability metrics
-* [ ] Server-wide impact reports
-* [ ] Seasonal trend analysis
-* [ ] Environmental impact projections
+The current Python implementation uses:
 
-== Phase 5: Language Migration
+* discord.py (async Discord interactions)
+* SQLAlchemy (ORM)
+* SQLite (development database)
+* pytest (testing)
 
-Target: Migrate to Rust/ReScript per language policy
+Per project language policy (`.claude/CLAUDE.md`), future development should consider:
 
-=== Migration Strategy
+* **ReScript** for bot logic (compiles to JS, type-safe)
+* **Deno** runtime (replaces Node.js ecosystem)
+* **Rust** for performance-critical services or WASM modules
+* **Gleam** for backend services (BEAM or JS compilation)
 
-Per `.claude/CLAUDE.md` language policy:
+Migration path:
 
-[cols="2,2,2"]
-|===
-|Component |Current |Target
+1. Stabilize current Python implementation for production
+2. Create Deno-based bot using Discord API directly (no discord.py equivalent needed)
+3. Port business logic to ReScript modules
+4. Extract scoring algorithms to Rust WASM for cross-platform use
+5. Deprecate Python codebase
 
-|Backend/Core
-|Python
-|Rust
+== Contributing
 
-|Bot Logic
-|Python (discord.py)
-|Rust (serenity)
+See `CONTRIBUTING.md` for development guidelines.
 
-|Web Frontend
-|N/A
-|ReScript
+Priority areas for contribution:
 
-|CLI Tools
-|Python
-|Rust
+1. **Data curation** - Verified material and brand datasets
+2. **Testing** - Expand integration test coverage
+3. **Documentation** - User guides and command examples
+4. **Localization** - Multi-language support
 
-|Configuration
-|TOML/ENV
-|Nickel
+== License
 
-|Runtime
-|Python
-|Deno (for JS glue)
-|===
-
-=== Migration Phases
-
-. *Phase 5a*: Rust core library
-** Data models in Rust
-** Sustainability algorithms in Rust
-** Database layer (diesel/sqlx)
-
-. *Phase 5b*: Rust Discord bot
-** Migrate to serenity crate
-** Maintain feature parity
-** Performance optimization
-
-. *Phase 5c*: ReScript web dashboard
-** Frontend in ReScript
-** Compile to JS, run on Deno
-** Type-safe UI components
-
-. *Phase 5d*: Remove Python
-** Archive Python implementation
-** Full Rust/ReScript stack
-** Update CI/CD
-
-== Long-Term Vision
-
-=== Community Features
-
-* Sustainable fashion challenges
-* Community rankings
-* Shared wardrobes (swapping)
-* Local sustainable shopping groups
-* Educational content creation
-
-=== E-Commerce Integration
-
-* Browser extension for shopping
-* Sustainability scores on product pages
-* Alternative suggestions while browsing
-* Price-sustainability comparison
-
-=== Open Data Initiative
-
-* Public sustainability database
-* API for third-party apps
-* Research data exports
-* Academic partnerships
-
-== Standards Compliance Roadmap
-
-=== Current: RSR Bronze
-
-All Bronze requirements met.
-
-=== Target: RSR Silver
-
-* [ ] Nix flake for reproducible builds
-* [ ] Security audit completion
-* [ ] Formal verification for critical paths
-* [ ] 100% type hint coverage
-
-=== Aspirational: RSR Gold
-
-* [ ] Mathematical proofs for algorithms
-* [ ] Complete formal verification
-* [ ] Academic peer review
-* [ ] Security certification
-
-== Contributing to the Roadmap
-
-See link:CONTRIBUTING.md[CONTRIBUTING.md] for how to contribute.
-
-Roadmap items are tracked as GitHub Issues with labels:
-
-* `roadmap:phase-1` through `roadmap:phase-5`
-* `priority:high`, `priority:medium`, `priority:low`
-* `type:feature`, `type:enhancement`, `type:migration`
-
-== Version History
-
-[cols="1,2,3"]
-|===
-|Version |Date |Milestone
-
-|0.1.0
-|2025-11-22
-|Initial release, core bot functionality
-
-|0.2.0
-|TBD
-|Phase 1 completion (data expansion)
-
-|0.3.0
-|TBD
-|Phase 2 completion (enhanced features)
-
-|1.0.0
-|TBD
-|Stable release, Phase 3 completion
-|===
-
----
-
-_Last updated: 2025-12-26_
-
-_TPCF Perimeter 3 - Open for community contributions_
+AGPL-3.0-or-later - see `LICENSE.txt`
