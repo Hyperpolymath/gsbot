@@ -1,14 +1,342 @@
-= GSBot
-:toc: auto
+// SPDX-License-Identifier: MPL-2.0
+= Garment Sustainability Bot (GSBot)
+:toc: preamble
+:toclevels: 2
+:icons: font
+:source-highlighter: rouge
 
-A Discord bot that promotes sustainability in the garment and fashion industry.
+A Discord bot promoting sustainability in the garment and fashion industry through insights, tracking, and actionable information.
 
-== Features
+image:https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml/badge.svg[CI/CD,link=https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml]
+image:https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg[License: MPL 2.0,link=https://opensource.org/licenses/MPL-2.0]
+image:https://img.shields.io/badge/python-3.9+-blue.svg[Python 3.9+,link=https://www.python.org/downloads/]
+image:https://img.shields.io/badge/RSR-Bronze-cd7f32.svg[RSR Compliant,link=RSR.md]
+image:https://img.shields.io/badge/TPCF-Perimeter%203-success.svg[TPCF Perimeter 3,link=TPCF.md]
 
-* Sustainable fashion insights
-* Tracking and analytics
-* Actionable sustainability information
+== Overview
+
+GSBot helps users make informed decisions about sustainable fashion by providing:
+
+* *Sustainability Scoring* - Environmental impact scores for garments and materials
+* *Material Analysis* - Detailed fabric environmental footprints
+* *Brand Database* - Sustainable fashion brand ratings and certifications
+* *Care Instructions* - Extend garment life through proper care
+* *Sustainable Alternatives* - Eco-friendly options for conventional items
+* *User Tracking* - Gamification with points, levels, and leaderboards
+* *Tips & Education* - Daily sustainability best practices
+
+== Implementation Status
+
+[cols="2,3,1"]
+|===
+|Component |Description |Status
+
+|Discord Bot
+|Full async command framework with 5 cogs
+|Complete
+
+|Data Models
+|Material, Garment, Brand, User (SQLAlchemy ORM)
+|Complete
+
+|Services
+|Database CRUD, Sustainability Analyzer
+|Complete
+
+|Fixture Data
+|10 materials, 7 garments, 6 brands
+|Complete
+
+|Test Suite
+|Unit + integration tests (pytest)
+|Complete
+
+|CI/CD
+|GitHub Actions, Python 3.9-3.12
+|Complete
+
+|Documentation
+|README, CONTRIBUTING, ARCHITECTURE, etc.
+|Complete
+|===
+
+== Quick Start
+
+=== Prerequisites
+
+* Python 3.9+
+* Discord Bot Token (https://discord.com/developers/applications[create one here])
+
+=== Installation
+
+[source,bash]
+----
+# Clone repository
+git clone https://github.com/Hyperpolymath/gsbot.git
+cd gsbot
+
+# Install dependencies
+pip install -r requirements.txt
+pip install -e .
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your DISCORD_TOKEN
+
+# Initialize database with sample data
+python scripts/load_fixtures.py
+
+# Run the bot
+python src/bot/main.py
+----
+
+== Commands
+
+=== Core Commands
+
+[cols="2,3,2"]
+|===
+|Command |Description |Example
+
+|`!sustainability <garment>`
+|Get sustainability score
+|`!sustainability organic cotton t-shirt`
+
+|`!impact <material>`
+|Material environmental impact
+|`!impact linen`
+
+|`!alternatives <garment>`
+|Find sustainable alternatives
+|`!alternatives polyester jacket`
+
+|`!care <garment>`
+|Care instructions
+|`!care wool sweater`
+
+|`!brands [name]`
+|Search sustainable brands
+|`!brands patagonia`
+
+|`!compare <mat1> <mat2>`
+|Compare two materials
+|`!compare cotton polyester`
+
+|`!tips`
+|Get sustainability tips
+|`!tips`
+
+|`!search <query>`
+|Search garments and materials
+|`!search organic`
+|===
+
+=== User Commands
+
+[cols="2,3"]
+|===
+|Command |Description
+
+|`!profile`
+|View sustainability profile and stats
+
+|`!leaderboard`
+|View top sustainability champions
+
+|`!setpreference <type> <value>`
+|Set preferences (materials, budget, priority)
+|===
+
+=== Admin Commands
+
+[cols="2,3"]
+|===
+|Command |Description
+
+|`!loaddata`
+|Load sample data
+
+|`!stats`
+|View bot statistics
+
+|`!announce <message>`
+|Send announcement to all guilds
+|===
+
+== Architecture
+
+[source]
+----
+gsbot/
+├── src/
+│   ├── bot/                # Discord bot
+│   │   ├── cogs/          # Command groups (5 cogs)
+│   │   ├── bot.py         # Main bot class
+│   │   └── main.py        # Entry point
+│   ├── models/            # SQLAlchemy models
+│   │   ├── material.py    # Material with metrics
+│   │   ├── garment.py     # Garment with scoring
+│   │   ├── brand.py       # Brand with ratings
+│   │   └── user.py        # User with gamification
+│   ├── services/          # Business logic
+│   │   ├── database.py    # CRUD operations
+│   │   └── sustainability.py  # Scoring algorithms
+│   ├── config/            # Configuration
+│   └── utils/             # Utilities (logger, cache)
+├── tests/                 # Test suite
+│   ├── unit/             # Unit tests
+│   └── integration/      # Integration tests
+├── scripts/              # Utility scripts
+└── docs/                 # Documentation
+----
+
+See link:docs/ARCHITECTURE.md[ARCHITECTURE.md] for detailed design documentation.
+
+== Development
+
+=== Testing
+
+[source,bash]
+----
+# Run all tests
+pytest
+
+# With coverage
+pytest --cov=src --cov-report=term-missing
+
+# Specific test file
+pytest tests/unit/test_models.py -v
+----
+
+=== Code Quality
+
+[source,bash]
+----
+# Format
+black src/ tests/
+
+# Lint
+flake8 src/ tests/ --max-line-length=120
+
+# Type check
+mypy src/ --ignore-missing-imports
+
+# Quality analysis
+pylint src/
+----
+
+=== Using just (recommended)
+
+[source,bash]
+----
+just --list     # See all commands
+just test       # Run tests
+just lint       # Run linting
+just format     # Format code
+just all        # Run all checks
+----
+
+== Database
+
+SQLite with SQLAlchemy ORM. Four main models:
+
+* *Material* - Fabric materials with 5 sustainability scores + environmental metrics
+* *Garment* - Clothing items with material relationships and care instructions
+* *Brand* - Fashion brands with certifications and Good On You ratings
+* *User* - Discord users with points, levels, ranks, preferences
+
+=== Sample Data
+
+The fixture loader (`scripts/load_fixtures.py`) includes:
+
+* 10 materials (organic cotton, linen, hemp, wool, polyester, recycled polyester, etc.)
+* 7 garments (t-shirts, jeans, jackets, dresses)
+* 6 brands (Patagonia, Eileen Fisher, Reformation, People Tree, Zara, H&M)
+
+== Standards Compliance
+
+[cols="1,2"]
+|===
+|Standard |Status
+
+|RSR (Rhodium Standard Repository)
+|Bronze
+
+|TPCF (Tri-Perimeter Contribution Framework)
+|Perimeter 3 (Community Sandbox)
+
+|RFC 9116 (security.txt)
+|Compliant
+
+|Documentation
+|Complete (7 core docs + .well-known/)
+|===
+
+See link:RSR.md[RSR.md] for full compliance details.
+
+== Roadmap
+
+See link:ROADMAP.adoc[ROADMAP.adoc] for detailed development plans.
+
+=== Upcoming
+
+* Phase 1: Data expansion (50+ materials, 30+ brands)
+* Phase 2: Carbon footprint calculator, wardrobe tracking
+* Phase 3: Web dashboard, multi-platform support
+* Phase 4: ML-powered features (image recognition)
+* Phase 5: Rust/ReScript migration per language policy
+
+== Sustainability Focus
+
+GSBot educates users about:
+
+* *Materials* - Cotton, polyester, linen, hemp, recycled materials
+* *Production* - Water usage, energy consumption, chemical usage
+* *Lifecycle* - Durability, care, end-of-life considerations
+* *Brands* - Ethical and sustainable fashion companies
+* *Practices* - Repair, reuse, recycling, conscious consumption
+
+== Contributing
+
+See link:CONTRIBUTING.md[CONTRIBUTING.md] for contribution guidelines.
+
+. Fork the repository
+. Create feature branch (`git checkout -b feature/amazing-feature`)
+. Make changes with tests
+. Run tests and linting
+. Commit (`git commit -m 'feat: add amazing feature'`)
+. Push (`git push origin feature/amazing-feature`)
+. Open Pull Request
+
+=== Commit Convention
+
+* `feat:` New feature
+* `fix:` Bug fix
+* `docs:` Documentation
+* `style:` Code style
+* `refactor:` Refactoring
+* `test:` Tests
+* `chore:` Maintenance
+
+== Resources
+
+* https://www.fashionrevolution.org/[Fashion Revolution]
+* https://goodonyou.eco/[Good On You]
+* https://apparelcoalition.org/[Sustainable Apparel Coalition]
+* https://ellenmacarthurfoundation.org/[Ellen MacArthur Foundation]
 
 == License
 
-AGPL-3.0-or-later
+Mozilla Public License 2.0 - see link:LICENSE.txt[LICENSE.txt].
+
+== Support
+
+* Check https://github.com/Hyperpolymath/gsbot/issues[Issues] for existing problems
+* Create a new issue with detailed information
+* Use Discussions for general questions
+
+---
+
+_Made for a more sustainable future_
+
+_TPCF Perimeter 3 - Open for community contributions_
