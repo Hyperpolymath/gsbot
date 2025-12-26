@@ -44,7 +44,11 @@ Discord Platform
 +------------------+
 ----
 
-== Features
+image:https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml/badge.svg[CI/CD,link=https://github.com/Hyperpolymath/gsbot/actions/workflows/main.yml]
+image:https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg[License: MPL 2.0,link=https://opensource.org/licenses/MPL-2.0]
+image:https://img.shields.io/badge/python-3.9+-blue.svg[Python 3.9+,link=https://www.python.org/downloads/]
+image:https://img.shields.io/badge/RSR-Bronze-cd7f32.svg[RSR Compliant,link=RSR.md]
+image:https://img.shields.io/badge/TPCF-Perimeter%203-success.svg[TPCF Perimeter 3,link=TPCF.md]
 
 === Sustainability Commands
 
