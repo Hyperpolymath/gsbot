@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 name: Python CI (Legacy - Migrate to Rust/ReScript)
 on: [push, pull_request]
 
