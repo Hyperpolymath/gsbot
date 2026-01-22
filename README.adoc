@@ -329,7 +329,7 @@ Key areas:
 
 == License
 
-AGPL-3.0-or-later
+PMPL-1.0-or-later
 
 This ensures any modifications or derivative works remain open source, protecting the sustainability mission of the project.
 
